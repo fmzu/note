@@ -1,12 +1,20 @@
+import type { LinksFunction } from "@remix-run/cloudflare"
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
+} from "@remix-run/react"
+import stylesheet from "~/globals.css?url"
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: stylesheet },
+]
+
+type Props = { children: React.ReactNode }
+
+export function Layout(props: Props) {
   return (
     <html lang="en">
       <head>
@@ -16,14 +24,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        {props.children}
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
 
 export default function App() {
-  return <Outlet />;
+  return <Outlet />
 }

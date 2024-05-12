@@ -3,5 +3,5 @@ import { defineConfig } from "vite"
 import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
-	plugins: [cloudflareDevProxyVitePlugin(), vitePlugin(), tsconfigPaths()],
+  plugins: [cloudflareDevProxyVitePlugin(), vitePlugin(), tsconfigPaths()],
 })
