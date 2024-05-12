@@ -1,0 +1,23 @@
+{
+	"$schema": "node_modules/@biomejs/biome/configuration_schema.json",
+	"files": {
+		"include": ["lib", "*.ts", "*.json"]
+	},
+	"linter": {
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"useExhaustiveDependencies": "off",
+				"noUnusedImports": "error"
+			}
+		}
+	},
+	"organizeImports": {
+		"enabled": false
+	},
+	"javascript": {
+		"formatter": {
+			"semicolons": "asNeeded"
+		}
+	}
+}
