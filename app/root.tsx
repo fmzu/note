@@ -1,4 +1,3 @@
-import type { LinksFunction } from "@remix-run/cloudflare"
 import {
   Links,
   Meta,
@@ -7,6 +6,8 @@ import {
   ScrollRestoration,
 } from "@remix-run/react"
 import stylesheet from "~/globals.css?url"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import type { LinksFunction } from "@remix-run/cloudflare"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -32,6 +33,12 @@ export function Layout(props: Props) {
   )
 }
 
+const queryClient = new QueryClient()
+
 export default function App() {
-  return <Outlet />
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Outlet />
+    </QueryClientProvider>
+  )
 }
