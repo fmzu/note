@@ -1,6 +1,5 @@
 import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
-import {} from "valibot"
 import { genSaltSync, hashSync, compareSync } from "bcrypt-ts"
 import { usersTable } from "~/schema"
 import { eq } from "drizzle-orm"
@@ -34,8 +33,6 @@ authRoute.post("/sign-in", async (c) => {
   const json = await c.req.json()
 
   const db = drizzle(c.env.DB)
-
-  const salt = genSaltSync(10)
 
   const user = await db
     .select()
