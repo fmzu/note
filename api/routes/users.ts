@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
 import {} from "valibot"
-import { drizzleUsers } from "~/schema"
+import { usersTable } from "~/schema"
 
 export const usersRoute = new Hono<{ Bindings: { DB: D1Database } }>()
 
@@ -12,7 +12,7 @@ usersRoute.post("/", async (c) => {
 usersRoute.get("/", async (c) => {
   const db = drizzle(c.env.DB)
 
-  const users = await db.select().from(drizzleUsers)
+  const users = await db.select().from(usersTable)
 
   const results = users.map((user) => {
     return {

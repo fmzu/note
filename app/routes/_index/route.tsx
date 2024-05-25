@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare"
 import { Badge } from "~/components/ui/badge"
 import { Card, CardContent } from "~/components/ui/card"
 import { drizzle } from "drizzle-orm/d1"
-import { drizzlePosts } from "~/schema"
+import { postsTable } from "~/schema"
 import { useLoaderData } from "@remix-run/react"
 import { NewNoteForm } from "./components/new-note-form"
 
@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => {
 export async function loader(props: LoaderFunctionArgs) {
   const database = drizzle(props.context.cloudflare.env.DB)
 
-  const allPosts = await database.select().from(drizzlePosts).all()
+  const allPosts = await database.select().from(postsTable).all()
 
   return { posts: allPosts }
 }

@@ -1,13 +1,13 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
-export const drizzlePosts = sqliteTable("posts", {
+export const postsTable = sqliteTable("posts", {
   id: integer("id").primaryKey(),
   uuid: text("uuid", { length: 256 }).notNull().unique(),
   title: text("title", { length: 64 }).notNull(),
   text: text("text", { length: 2048 }).notNull(),
 })
 
-export const drizzleUsers = sqliteTable("users", {
+export const usersTable = sqliteTable("users", {
   id: integer("id").primaryKey(),
   uuid: text("uuid", { length: 256 }).notNull(),
   name: text("name", { length: 256 }).notNull(),

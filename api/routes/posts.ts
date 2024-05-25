@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
-import { drizzlePosts } from "~/schema"
+import { postsTable } from "~/schema"
 import { object, safeParse, string } from "valibot"
 
 export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
@@ -23,7 +23,7 @@ postsRoute.post("/", async (c) => {
     throw new Response("Bad request", { status: 400 })
   }
 
-  await db.insert(drizzlePosts).values({
+  await db.insert(postsTable).values({
     uuid: postId,
     title: "",
     text: body.output.text,
@@ -31,8 +31,8 @@ postsRoute.post("/", async (c) => {
 
   const newPost = await db
     .select()
-    .from(drizzlePosts)
-    .where(eq(drizzlePosts.uuid, postId))
+    .from(postsTable)
+    .where(eq(postsTable.uuid, postId))
     .get()
 
   if (newPost === undefined) {
@@ -45,7 +45,7 @@ postsRoute.post("/", async (c) => {
 postsRoute.get("/", async (c) => {
   const database = drizzle(c.env.DB)
 
-  const allPosts = await database.select().from(drizzlePosts).all()
+  const allPosts = await database.select().from(postsTable).all()
 
   return new Response(JSON.stringify(allPosts))
 })
