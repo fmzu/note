@@ -5,6 +5,7 @@ import { drizzle } from "drizzle-orm/d1"
 import { postsTable } from "~/schema"
 import { useLoaderData } from "@remix-run/react"
 import { NewNoteForm } from "./components/new-note-form"
+import { desc } from "drizzle-orm"
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,7 +20,11 @@ export const meta: MetaFunction = () => {
 export async function loader(props: LoaderFunctionArgs) {
   const database = drizzle(props.context.cloudflare.env.DB)
 
-  const allPosts = await database.select().from(postsTable).all()
+  const allPosts = await database
+    .select()
+    .from(postsTable)
+    .orderBy(desc(postsTable.text))
+    .all()
 
   return { posts: allPosts }
 }

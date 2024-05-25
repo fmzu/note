@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "25fe77b9-1a1d-4bac-b7f0-8f90a72b0845",
+  "id": "324b6cef-e4b2-4a25-8e8b-9bd2b2c657d4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "posts": {
@@ -23,7 +23,7 @@
         },
         "title": {
           "name": "title",
-          "type": "text(64)",
+          "type": "text(128)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -34,6 +34,14 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {

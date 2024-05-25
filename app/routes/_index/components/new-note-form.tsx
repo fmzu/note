@@ -25,6 +25,7 @@ export function NewNoteForm() {
         event.preventDefault()
         onSubmit()
       }}
+      className="flex gap-2"
     >
       <Input
         name={"body"}

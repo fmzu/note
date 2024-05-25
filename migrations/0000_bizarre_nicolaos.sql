@@ -1,8 +1,9 @@
 CREATE TABLE `posts` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`uuid` text(256) NOT NULL,
-	`title` text(64) NOT NULL,
-	`text` text(2048) NOT NULL
+	`title` text(128) NOT NULL,
+	`text` text(2048) NOT NULL,
+	`created_at` text(256) DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `users` (

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm"
+import { desc, eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
 import { postsTable } from "~/schema"
@@ -45,7 +45,11 @@ postsRoute.post("/", async (c) => {
 postsRoute.get("/", async (c) => {
   const database = drizzle(c.env.DB)
 
-  const allPosts = await database.select().from(postsTable).all()
+  const allPosts = await database
+    .select()
+    .from(postsTable)
+    .orderBy(desc(postsTable.text))
+    .all()
 
   return new Response(JSON.stringify(allPosts))
 })
