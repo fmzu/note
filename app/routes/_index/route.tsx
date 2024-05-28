@@ -6,6 +6,8 @@ import { postsTable } from "~/schema"
 import { useLoaderData } from "@remix-run/react"
 import { NewNoteForm } from "./components/new-note-form"
 import { desc } from "drizzle-orm"
+import { Trash2 } from "lucide-react"
+import { Button } from "~/components/ui/button"
 
 export const meta: MetaFunction = () => {
   return [
@@ -39,6 +41,17 @@ export default function Index() {
         {data.posts.map((post) => (
           <Card key={post.uuid}>
             <CardContent className="p-4 space-y-2">
+              <div className="flex justify-end">
+                <Button
+                  className="rounded-full"
+                  variant={"ghost"}
+                  onClick={() => {
+                    alert("aa")
+                  }}
+                >
+                  <Trash2 className="w-4" />
+                </Button>
+              </div>
               <p>{post.text}</p>
               <div className="flex flex-wrap gap-1">
                 <Badge>{"タグ"}</Badge>
