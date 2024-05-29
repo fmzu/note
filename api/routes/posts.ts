@@ -5,51 +5,62 @@ import { postsTable } from "~/schema"
 import { object, safeParse, string } from "valibot"
 
 export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
+  .post("/", async (c) => {
+    const db = drizzle(c.env.DB)
 
-postsRoute.post("/", async (c) => {
-  const db = drizzle(c.env.DB)
+    const jsonBody = await c.req.json()
 
-  const jsonBody = await c.req.json()
+    const vBody = object({
+      text: string(),
+    })
 
-  const vBody = object({
-    text: string(),
+    const postId = crypto.randomUUID()
+
+    const body = safeParse(vBody, jsonBody)
+
+    if (body.success === false) {
+      throw new Response("Bad request", { status: 400 })
+    }
+
+    await db.insert(postsTable).values({
+      uuid: postId,
+      title: "",
+      text: body.output.text,
+    })
+
+    const newPost = await db
+      .select()
+      .from(postsTable)
+      .where(eq(postsTable.uuid, postId))
+      .get()
+
+    if (newPost === undefined) {
+      throw new Response("Not found", { status: 404 })
+    }
+
+    return new Response(JSON.stringify(newPost))
   })
+  .get("/", async (c) => {
+    const database = drizzle(c.env.DB)
 
-  const postId = crypto.randomUUID()
+    const allPosts = await database
+      .select()
+      .from(postsTable)
+      .where(eq(postsTable.isDeleted, false))
+      .orderBy(desc(postsTable.text))
+      .all()
 
-  const body = safeParse(vBody, jsonBody)
-
-  if (body.success === false) {
-    throw new Response("Bad request", { status: 400 })
-  }
-
-  await db.insert(postsTable).values({
-    uuid: postId,
-    title: "",
-    text: body.output.text,
+    return c.json(allPosts)
   })
+  .delete("/", async (c) => {
+    const database = drizzle(c.env.DB)
 
-  const newPost = await db
-    .select()
-    .from(postsTable)
-    .where(eq(postsTable.uuid, postId))
-    .get()
+    const json = await c.req.json()
 
-  if (newPost === undefined) {
-    throw new Response("Not found", { status: 404 })
-  }
+    await database
+      .update(postsTable)
+      .set({ isDeleted: true })
+      .where(eq(postsTable.uuid, json.uuid))
 
-  return new Response(JSON.stringify(newPost))
-})
-
-postsRoute.get("/", async (c) => {
-  const database = drizzle(c.env.DB)
-
-  const allPosts = await database
-    .select()
-    .from(postsTable)
-    .orderBy(desc(postsTable.text))
-    .all()
-
-  return new Response(JSON.stringify(allPosts))
-})
+    return new Response(JSON.stringify({}))
+  })

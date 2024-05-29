@@ -5,13 +5,10 @@ import { tagsRoute } from "./routes/tags"
 import { authRoute } from "./routes/auth"
 
 export const api = new Hono<{ Bindings: { DB: D1Database } }>()
+  .route("/api/posts", postsRoute)
+  .route("/api/users", usersRoute)
+  .route("/api/tags", tagsRoute)
+  .route("/api/boards", tagsRoute)
+  .route("/api/auth", authRoute)
 
-api.route("/api/posts", postsRoute)
-
-api.route("/api/users", usersRoute)
-
-api.route("/api/tags", tagsRoute)
-
-api.route("/api/boards", tagsRoute)
-
-api.route("/api/auth", authRoute)
+export type Api = typeof api

@@ -9,6 +9,9 @@ export const postsTable = sqliteTable("posts", {
   createdAt: text("created_at", { length: 256 })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
+  isDeleted: integer("is_deleted", { mode: "boolean" })
+    .notNull()
+    .default(false),
 })
 
 export const usersTable = sqliteTable("users", {

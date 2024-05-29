@@ -1,13 +1,10 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare"
-import { Badge } from "~/components/ui/badge"
-import { Card, CardContent } from "~/components/ui/card"
-import { drizzle } from "drizzle-orm/d1"
-import { postsTable } from "~/schema"
-import { useLoaderData } from "@remix-run/react"
+import type { MetaFunction } from "@remix-run/cloudflare"
+import {} from "drizzle-orm"
 import { NewNoteForm } from "./components/new-note-form"
-import { desc } from "drizzle-orm"
-import { Trash2 } from "lucide-react"
-import { Button } from "~/components/ui/button"
+import { NoteCard } from "./components/note-card"
+import { useQuery } from "@tanstack/react-query"
+import { hc } from "hono/client"
+import type { Api } from "api/route"
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,46 +16,31 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export async function loader(props: LoaderFunctionArgs) {
-  const database = drizzle(props.context.cloudflare.env.DB)
-
-  const allPosts = await database
-    .select()
-    .from(postsTable)
-    .orderBy(desc(postsTable.text))
-    .all()
-
-  return { posts: allPosts }
-}
-
 export default function Index() {
-  const data = useLoaderData<typeof loader>()
+  const query = useQuery({
+    queryKey: ["posts"],
+    async queryFn() {
+      const client = hc<Api>("/")
+      const result = await client.api.posts.$get()
+      return await result.json()
+    },
+  })
+
+  const onRefetch = () => {
+    query.refetch()
+  }
 
   return (
     <div className="p-4 space-y-4">
       <NewNoteForm />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {data.posts.map((post) => (
-          <Card key={post.uuid}>
-            <CardContent className="p-4 space-y-2">
-              <div className="flex justify-end">
-                <Button
-                  className="rounded-full"
-                  variant={"ghost"}
-                  onClick={() => {
-                    alert("aa")
-                  }}
-                >
-                  <Trash2 className="w-4" />
-                </Button>
-              </div>
-              <p>{post.text}</p>
-              <div className="flex flex-wrap gap-1">
-                <Badge>{"タグ"}</Badge>
-                <Badge>{"タグ"}</Badge>
-              </div>
-            </CardContent>
-          </Card>
+        {query.data?.map((post) => (
+          <NoteCard
+            key={post.uuid}
+            id={post.uuid}
+            text={post.text}
+            onRefetch={onRefetch}
+          />
         ))}
       </div>
     </div>
