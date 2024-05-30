@@ -32,7 +32,7 @@ export default function Index() {
 
   return (
     <div className="p-4 space-y-4">
-      <NewNoteForm />
+      <NewNoteForm onRefetch={onRefetch} />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {query.data?.map((post) => (
           <NoteCard

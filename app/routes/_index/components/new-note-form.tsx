@@ -3,7 +3,11 @@ import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 
-export function NewNoteForm() {
+type Props = {
+  onRefetch(): void
+}
+
+export function NewNoteForm(props: Props) {
   const [text, setText] = useState("")
 
   const mutation = useMutation({
@@ -17,6 +21,7 @@ export function NewNoteForm() {
 
   const onSubmit = () => {
     mutation.mutate()
+    props.onRefetch()
   }
 
   return (
