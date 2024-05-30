@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { Trash2 } from "lucide-react"
+import { Trash2, ArchiveRestore } from "lucide-react"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent } from "~/components/ui/card"
@@ -39,7 +39,16 @@ export function NoteCard(props: Props) {
             variant={"secondary"}
             size={"icon"}
             onClick={() => {
-              console.log("delete")
+              console.log("archieve")
+            }}
+          >
+            <ArchiveRestore className="w-4" />
+          </Button>
+          <Button
+            className="rounded-full"
+            variant={"secondary"}
+            size={"icon"}
+            onClick={() => {
               onDelete()
             }}
           >
