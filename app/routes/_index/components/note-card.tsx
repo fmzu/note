@@ -28,6 +28,11 @@ export function NoteCard(props: Props) {
   return (
     <Card>
       <CardContent className="p-4 space-y-2">
+        <p>{props.text}</p>
+        <div className="flex flex-wrap gap-1">
+          <Badge>{"タグ"}</Badge>
+          <Badge>{"タグ"}</Badge>
+        </div>
         <div className="flex justify-end">
           <Button
             className="rounded-full"
@@ -40,11 +45,6 @@ export function NoteCard(props: Props) {
           >
             <Trash2 className="w-4" />
           </Button>
-        </div>
-        <p>{props.text}</p>
-        <div className="flex flex-wrap gap-1">
-          <Badge>{"タグ"}</Badge>
-          <Badge>{"タグ"}</Badge>
         </div>
       </CardContent>
     </Card>

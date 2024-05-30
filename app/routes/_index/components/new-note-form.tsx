@@ -19,6 +19,8 @@ export function NewNoteForm(props: Props) {
     },
   })
 
+  const isSendButtonEnabled = text.trim() !== "" && text.length > 0
+
   const onSubmit = () => {
     mutation.mutate()
     props.onRefetch()
@@ -40,7 +42,13 @@ export function NewNoteForm(props: Props) {
           setText(event.target.value)
         }}
       />
-      <Button type={"submit"}>{"追加"}</Button>
+      <Button
+        type={"submit"}
+        onClick={() => {}}
+        disabled={!isSendButtonEnabled}
+      >
+        {"追加"}
+      </Button>
     </form>
   )
 }
