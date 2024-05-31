@@ -40,6 +40,12 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
 
     return new Response(JSON.stringify(newPost))
   })
+  .post("/postId/bookmarks", async (c) => {
+    return new Response(JSON.stringify({}))
+  })
+  .post("/postId/archieves", async (c) => {
+    return new Response(JSON.stringify({}))
+  })
   .get("/", async (c) => {
     const database = drizzle(c.env.DB)
 

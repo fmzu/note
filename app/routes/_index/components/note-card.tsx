@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { Trash2, ArchiveRestore, Bookmark, BookmarkCheck } from "lucide-react"
+import { Trash2, ArchiveRestore, Pin } from "lucide-react"
 import { useState } from "react"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
@@ -46,9 +46,9 @@ export function NoteCard(props: Props) {
             }}
           >
             {isBookmarked ? (
-              <BookmarkCheck className="w-4" />
+              <Pin className="w-4" fill="black" />
             ) : (
-              <Bookmark className="w-4" />
+              <Pin className="w-4" />
             )}
           </Button>
         </div>
