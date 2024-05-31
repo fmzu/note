@@ -26,7 +26,7 @@ export function NoteCard(props: Props) {
     props.onRefetch()
   }
 
-  const [isBookmarked, setBookmarked] = useState(true)
+  const [isBookmarked, setBookmarked] = useState(false)
 
   const onBookmark = () => {
     setBookmarked(!isBookmarked)
@@ -46,9 +46,9 @@ export function NoteCard(props: Props) {
             }}
           >
             {isBookmarked ? (
-              <Bookmark className="w-4" />
-            ) : (
               <BookmarkCheck className="w-4" />
+            ) : (
+              <Bookmark className="w-4" />
             )}
           </Button>
         </div>
