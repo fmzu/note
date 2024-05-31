@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
+import { ImagePlus } from "lucide-react"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
@@ -42,6 +43,9 @@ export function NewNoteForm(props: Props) {
           setText(event.target.value)
         }}
       />
+      <Button disabled variant={"ghost"} className="rounded-full">
+        <ImagePlus className="w-4" />
+      </Button>
       <Button
         type={"submit"}
         onClick={() => {}}
