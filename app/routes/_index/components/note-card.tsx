@@ -10,18 +10,18 @@ import { Card, CardContent } from "~/components/ui/card"
 type Props = {
   uuid: string
   text: string
+  isBookmarked: boolean
   onRefetch(): void
 }
 
 const client = hc<Api>("/")
 
 export function NoteCard(props: Props) {
-  const mutation = useMutation<
-    InferResponseType<typeof client.api.posts.$delete>,
-    Error
-  >({
+  const mutation = useMutation({
     async mutationFn() {
-      const resp = await client.api.posts.$delete()
+      const resp = await client.api.posts[":post_id"].$delete({
+        param: { post_id: props.uuid },
+      })
       return await resp.json()
     },
   })
@@ -58,7 +58,7 @@ export function NoteCard(props: Props) {
     props.onRefetch()
   }
 
-  const [isBookmarked, setBookmarked] = useState(false)
+  const [isBookmarked, setBookmarked] = useState(props.isBookmarked)
 
   const onBookmark = async () => {
     setBookmarked(!isBookmarked)

@@ -64,6 +64,19 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
       return c.json("Not found", { status: 404 })
     }
 
+    const bookmark = await database
+      .select()
+      .from(bookmarksTable)
+      .where(eq(bookmarksTable.postId, post.id))
+      .get()
+
+    if (bookmark !== undefined) {
+      await database
+        .delete(bookmarksTable)
+        .where(eq(bookmarksTable.postId, post.id))
+      return c.json({})
+    }
+
     await database.insert(bookmarksTable).values({
       userId: json.user_id,
       postId: post.id,
@@ -86,25 +99,34 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
   .get("/", async (c) => {
     const database = drizzle(c.env.DB)
 
-    const allPosts = await database
+    const relations = await database
       .select()
       .from(postsTable)
       .where(eq(postsTable.isDeleted, false))
-      // .leftJoin(bookmarksTable, eq(postsTable.id, bookmarksTable.postId))
+      .leftJoin(bookmarksTable, eq(postsTable.id, bookmarksTable.postId))
       .orderBy(desc(postsTable.text))
       .all()
-    console.log(allPosts)
-    return c.json(allPosts)
+    console.log(relations)
+
+    const posts = relations.map((relation) => {
+      return {
+        ...relation.posts,
+        isBookmarked: relation.bookmarks !== null,
+      }
+    })
+
+    return c.json(posts)
   })
-  .delete("/", async (c) => {
+  .delete("/:post_id", async (c) => {
     const database = drizzle(c.env.DB)
 
-    const json = await c.req.json()
+    const postId = c.req.param("post_id")
+    console.log(postId)
 
     await database
       .update(postsTable)
       .set({ isDeleted: true })
-      .where(eq(postsTable.uuid, json.uuid))
+      .where(eq(postsTable.uuid, postId))
 
     return c.json({})
   })

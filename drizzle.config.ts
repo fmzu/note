@@ -4,9 +4,10 @@ export default {
   dialect: "sqlite",
   schema: "app/schema.ts",
   out: "migrations",
-  driver: "d1",
+  driver: "d1-http",
   dbCredentials: {
-    wranglerConfigPath: "./wrangler.toml",
-    dbName: "note",
+    accountId: "account-id",
+    databaseId: "database-id",
+    token: "token",
   },
 } satisfies Config

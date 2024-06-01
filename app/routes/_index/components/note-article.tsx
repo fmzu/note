@@ -29,6 +29,7 @@ export function NoteArticle() {
             uuid={post.uuid}
             text={post.text}
             onRefetch={onRefetch}
+            isBookmarked={post.isBookmarked}
           />
         ))}
       </div>
