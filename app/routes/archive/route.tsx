@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export default function ArchievePage() {
+export default function ArchivePage() {
   return (
     <div>
       <NoteHeader />

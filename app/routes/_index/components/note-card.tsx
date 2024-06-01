@@ -1,23 +1,55 @@
 import { useMutation } from "@tanstack/react-query"
-import { Trash2, ArchiveRestore, Pin } from "lucide-react"
+import type { Api } from "api/route"
+import { type InferResponseType, hc } from "hono/client"
+import { Trash2, ArchiveRestore, Bookmark } from "lucide-react"
 import { useState } from "react"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent } from "~/components/ui/card"
 
 type Props = {
-  id: string
+  uuid: string
   text: string
   onRefetch(): void
 }
 
+const client = hc<Api>("/")
+
 export function NoteCard(props: Props) {
-  const mutation = useMutation({
+  const mutation = useMutation<
+    InferResponseType<typeof client.api.posts.$delete>,
+    Error
+  >({
     async mutationFn() {
-      return fetch("/api/posts", {
-        method: "DELETE",
-        body: JSON.stringify({ uuid: props.id }),
+      const resp = await client.api.posts.$delete()
+      return await resp.json()
+    },
+  })
+
+  const bookmarkMutation = useMutation<
+    InferResponseType<
+      (typeof client.api.posts)[":post_id"]["bookmarks"]["$post"]
+    >,
+    Error
+  >({
+    async mutationFn() {
+      const resp = await client.api.posts[":post_id"].bookmarks.$post({
+        param: { post_id: props.uuid },
+        json: { user_id: 1 },
       })
+      return await resp.json()
+    },
+  })
+
+  const archiveMutation = useMutation<
+    InferResponseType<(typeof client.api.posts)[":post_id"]["archive"]["$put"]>,
+    Error
+  >({
+    async mutationFn() {
+      const resp = await client.api.posts[":post_id"].archive.$put({
+        param: { post_id: props.uuid },
+      })
+      return await resp.json()
     },
   })
 
@@ -28,8 +60,15 @@ export function NoteCard(props: Props) {
 
   const [isBookmarked, setBookmarked] = useState(false)
 
-  const onBookmark = () => {
+  const onBookmark = async () => {
     setBookmarked(!isBookmarked)
+    await bookmarkMutation.mutateAsync()
+    props.onRefetch()
+  }
+
+  const onArchive = async () => {
+    await archiveMutation.mutateAsync()
+    props.onRefetch()
   }
 
   return (
@@ -46,9 +85,9 @@ export function NoteCard(props: Props) {
             }}
           >
             {isBookmarked ? (
-              <Pin className="w-4" fill="black" />
+              <Bookmark className="w-4" fill="black" />
             ) : (
-              <Pin className="w-4" />
+              <Bookmark className="w-4" />
             )}
           </Button>
         </div>
@@ -63,7 +102,7 @@ export function NoteCard(props: Props) {
             variant={"secondary"}
             size={"icon"}
             onClick={() => {
-              console.log("archieve")
+              onArchive()
             }}
           >
             <ArchiveRestore className="w-4" />

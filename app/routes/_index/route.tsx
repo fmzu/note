@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/cloudflare"
 import { NoteArticle } from "./components/note-article"
 import { NoteHeader } from "./components/note-header"
+import { NoteNavigation } from "./components/note-navigation"
 
 export const meta: MetaFunction = () => {
   return [
@@ -29,7 +30,12 @@ export default function Index() {
   return (
     <div>
       <NoteHeader />
-      <NoteArticle />
+      <div className="flex">
+        <NoteNavigation />
+        <div className="w-full">
+          <NoteArticle />
+        </div>
+      </div>
     </div>
   )
 }

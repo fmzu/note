@@ -26,7 +26,7 @@ export function NoteArticle() {
         {query.data?.map((post) => (
           <NoteCard
             key={post.uuid}
-            id={post.uuid}
+            uuid={post.uuid}
             text={post.text}
             onRefetch={onRefetch}
           />

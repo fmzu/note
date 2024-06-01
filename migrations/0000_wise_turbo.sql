@@ -1,9 +1,17 @@
+CREATE TABLE `bookmarks` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`user_id` integer NOT NULL,
+	`post_id` integer NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE `posts` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`uuid` text(256) NOT NULL,
 	`title` text(128) NOT NULL,
 	`text` text(2048) NOT NULL,
-	`created_at` text(256) DEFAULT CURRENT_TIMESTAMP NOT NULL
+	`created_at` text(256) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	`is_deleted` integer DEFAULT false NOT NULL,
+	`is_archived` integer
 );
 --> statement-breakpoint
 CREATE TABLE `users` (
