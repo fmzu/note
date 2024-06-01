@@ -1,17 +1,13 @@
-import type { MetaFunction } from "@remix-run/cloudflare"
+import {
+  type LoaderFunctionArgs,
+  json,
+  type MetaFunction,
+} from "@remix-run/cloudflare"
 import { NoteArticle } from "./components/note-article"
 import { NoteHeader } from "./components/note-header"
 import { NoteNavigation } from "./components/note-navigation"
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    {
-      name: "description",
-      content: "Welcome to Remix! Using Vite and Cloudflare!",
-    },
-  ]
-}
+import { accessTokenCookie } from "~/lib/access-token-cookie"
+import { verify } from "hono/jwt"
 
 export default function Index() {
   // const query = useQuery({
@@ -38,4 +34,27 @@ export default function Index() {
       </div>
     </div>
   )
+}
+
+export async function loader(args: LoaderFunctionArgs) {
+  const cookieHeader = args.request.headers.get("Cookie")
+
+  const accessToken = await accessTokenCookie.parse(cookieHeader)
+
+  const payload = await verify(
+    accessToken,
+    import.meta.env.VITE_ACCESS_TOKEN_SECRET,
+  )
+
+  return json({})
+}
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "New Remix App" },
+    {
+      name: "description",
+      content: "Welcome to Remix! Using Vite and Cloudflare!",
+    },
+  ]
 }
