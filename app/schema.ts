@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm"
+import { sql } from "drizzle-orm"
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
 export const postsTable = sqliteTable("posts", {
@@ -15,11 +15,11 @@ export const postsTable = sqliteTable("posts", {
   isArchived: integer("is_archived", { mode: "boolean" }),
 })
 
-export const postRelations = relations(postsTable, (fn) => {
-  return {
-    bookmarks: fn.many(bookmarksTable),
-  }
-})
+// export const postRelations = relations(postsTable, (fn) => {
+//   return {
+//     bookmarks: fn.many(bookmarksTable),
+//   }
+// })
 
 export const bookmarksTable = sqliteTable("bookmarks", {
   id: integer("id").primaryKey(),
@@ -27,18 +27,18 @@ export const bookmarksTable = sqliteTable("bookmarks", {
   postId: integer("post_id").notNull(),
 })
 
-export const bookmarkRelations = relations(bookmarksTable, (fn) => {
-  return {
-    user: fn.one(usersTable, {
-      fields: [bookmarksTable.userId],
-      references: [usersTable.id],
-    }),
-    post: fn.one(postsTable, {
-      fields: [bookmarksTable.postId],
-      references: [postsTable.id],
-    }),
-  }
-})
+// export const bookmarkRelations = relations(bookmarksTable, (fn) => {
+//   return {
+//     user: fn.one(usersTable, {
+//       fields: [bookmarksTable.userId],
+//       references: [usersTable.id],
+//     }),
+//     post: fn.one(postsTable, {
+//       fields: [bookmarksTable.postId],
+//       references: [postsTable.id],
+//     }),
+//   }
+// })
 
 export const usersTable = sqliteTable("users", {
   id: integer("id").primaryKey(),
