@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm"
+import { eq, desc } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
 import { bookmarksTable, postsTable } from "~/schema"
@@ -87,11 +87,11 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
     const database = drizzle(c.env.DB)
 
     const allPosts = await database
-      .select({})
+      .select()
       .from(postsTable)
-      // .where(eq(postsTable.isDeleted, false))
+      .where(eq(postsTable.isDeleted, false))
       // .leftJoin(bookmarksTable, eq(postsTable.id, bookmarksTable.postId))
-      // .orderBy(desc(postsTable.text))
+      .orderBy(desc(postsTable.text))
       .all()
     console.log(allPosts)
     return c.json(allPosts)
