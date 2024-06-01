@@ -11,6 +11,7 @@ type Props = {
   uuid: string
   text: string
   isBookmarked: boolean
+  isArchived: boolean
   onRefetch(): void
 }
 
@@ -80,7 +81,6 @@ export function NoteCard(props: Props) {
             variant={"secondary"}
             size={"icon"}
             onClick={() => {
-              console.log("bookmark")
               onBookmark()
             }}
           >
@@ -97,16 +97,18 @@ export function NoteCard(props: Props) {
           <Badge>{"タグ"}</Badge>
         </div>
         <div className="flex justify-end">
-          <Button
-            className="rounded-full"
-            variant={"secondary"}
-            size={"icon"}
-            onClick={() => {
-              onArchive()
-            }}
-          >
-            <ArchiveRestore className="w-4" />
-          </Button>
+          {props.isArchived === false && (
+            <Button
+              className="rounded-full"
+              variant={"secondary"}
+              size={"icon"}
+              onClick={() => {
+                onArchive()
+              }}
+            >
+              <ArchiveRestore className="w-4" />
+            </Button>
+          )}
           <Button
             className="rounded-full"
             variant={"secondary"}

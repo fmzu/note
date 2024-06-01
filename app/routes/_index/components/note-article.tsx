@@ -1,4 +1,3 @@
-import {} from "~/components/ui/card"
 import { NewNoteForm } from "./new-note-form"
 import { NoteCard } from "./note-card"
 import { useQuery } from "@tanstack/react-query"
@@ -30,6 +29,7 @@ export function NoteArticle() {
             text={post.text}
             onRefetch={onRefetch}
             isBookmarked={post.isBookmarked}
+            isArchived={post.isArchived ?? false}
           />
         ))}
       </div>
