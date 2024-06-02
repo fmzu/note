@@ -12,11 +12,11 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export default function ArchivePage() {
+export default function BookmarkPage() {
   return (
     <div>
       <NoteHeader />
-      {"ArchivePage"}
+      {"BookmarkPage"}
       <NoteArticle />
     </div>
   )

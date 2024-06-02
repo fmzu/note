@@ -24,8 +24,6 @@ export default function LoginPage() {
   const onSubmit = async () => {
     const result = await mutation.mutateAsync()
     const json = await result.json()
-
-    console.log(json)
   }
 
   return (
@@ -59,6 +57,9 @@ export default function LoginPage() {
       </form>
       <Link to={"/sign-up"}>
         <Button>{"sign-up"}</Button>
+      </Link>
+      <Link to={"/sign-in"}>
+        <Button>{"sign-in"}</Button>
       </Link>
       <Link to={"/"}>
         <Button>{"home"}</Button>

@@ -35,6 +35,7 @@ export default function LoginPage() {
         className="space-y-4"
       >
         <Input
+          type="email"
           name={"body"}
           placeholder="ログインID"
           value={loginId}
@@ -43,6 +44,7 @@ export default function LoginPage() {
           }}
         />
         <Input
+          type="password"
           name={"body"}
           placeholder="パスワード"
           value={loginPassword}
@@ -52,11 +54,11 @@ export default function LoginPage() {
         />
         <Button type={"submit"}>{"追加"}</Button>
       </form>
-      <Link to={"/"}>
-        <Button>{"home"}</Button>
-      </Link>
       <Link to={"/sign-in"}>
         <Button>{"sign-in"}</Button>
+      </Link>
+      <Link to={"/"}>
+        <Button>{"home"}</Button>
       </Link>
     </div>
   )

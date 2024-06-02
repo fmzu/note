@@ -46,11 +46,7 @@ export function NewNoteForm(props: Props) {
       <Button disabled variant={"ghost"} className="rounded-full">
         <ImagePlus className="w-4" />
       </Button>
-      <Button
-        type={"submit"}
-        onClick={() => {}}
-        disabled={!isSendButtonEnabled}
-      >
+      <Button type={"submit"} disabled={!isSendButtonEnabled}>
         {"追加"}
       </Button>
     </form>
