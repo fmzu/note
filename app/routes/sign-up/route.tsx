@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
@@ -51,6 +52,12 @@ export default function LoginPage() {
         />
         <Button type={"submit"}>{"追加"}</Button>
       </form>
+      <Link to={"/"}>
+        <Button>{"home"}</Button>
+      </Link>
+      <Link to={"/sign-in"}>
+        <Button>{"sign-in"}</Button>
+      </Link>
     </div>
   )
 }
