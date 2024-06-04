@@ -8,6 +8,7 @@ import { NoteHeader } from "./components/note-header"
 import { NoteNavigation } from "./components/note-navigation"
 import { accessTokenCookie } from "~/lib/access-token-cookie"
 import { verify } from "hono/jwt"
+import { Separator } from "~/components/ui/separator"
 
 export default function Index() {
   // const query = useQuery({
@@ -28,6 +29,7 @@ export default function Index() {
       <NoteHeader />
       <div className="flex">
         <NoteNavigation />
+        <Separator style={{ height: "initial" }} orientation="vertical" />
         <div className="w-full">
           <NoteArticle />
         </div>
