@@ -1,5 +1,11 @@
 import { Link } from "@remix-run/react"
-import { ArchiveRestore, Bell, NotebookPen, Trash2 } from "lucide-react"
+import {
+  ArchiveRestore,
+  Bell,
+  Bookmark,
+  NotebookPen,
+  Trash2,
+} from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Separator } from "~/components/ui/separator"
 
@@ -33,6 +39,16 @@ export function NoteNavigation() {
         >
           <ArchiveRestore className="w-4 mr-2" />
           {"アーカイブ"}
+        </Button>
+      </Link>
+      <Separator />
+      <Link to="/bookmark" className="p-2">
+        <Button
+          className="flex space-x-2 h-16 w-full items-center"
+          variant={"ghost"}
+        >
+          <Bookmark className="w-4 mr-2" />
+          {"ブックマーク"}
         </Button>
       </Link>
       <Separator />

@@ -2,11 +2,12 @@ import { eq, desc } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
 import { bookmarksTable, postsTable } from "~/schema"
-import { number, object, safeParse, string } from "valibot"
-import { vValidator } from "@hono/valibot-validator"
+import { object, safeParse, string } from "valibot"
+import { zValidator } from "@hono/zod-validator"
+import { z } from "zod"
 
-const schema = object({
-  user_id: number(),
+const schema = z.object({
+  user_id: z.number(),
 })
 
 export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
@@ -45,7 +46,7 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
 
     return new Response(JSON.stringify(newPost))
   })
-  .post("/:post_id/bookmarks", vValidator("json", schema), async (c) => {
+  .post("/:post_id/bookmarks", zValidator("json", schema), async (c) => {
     const database = drizzle(c.env.DB)
 
     const postId = c.req.param("post_id")

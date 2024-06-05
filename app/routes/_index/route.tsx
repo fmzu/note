@@ -7,7 +7,6 @@ import { NoteArticle } from "./components/note-article"
 import { NoteHeader } from "./components/note-header"
 import { NoteNavigation } from "./components/note-navigation"
 import { accessTokenCookie } from "~/lib/access-token-cookie"
-import { verify } from "hono/jwt"
 import { Separator } from "~/components/ui/separator"
 
 export default function Index() {
@@ -43,10 +42,10 @@ export async function loader(args: LoaderFunctionArgs) {
 
   const accessToken = await accessTokenCookie.parse(cookieHeader)
 
-  const payload = await verify(
-    accessToken,
-    import.meta.env.VITE_ACCESS_TOKEN_SECRET,
-  )
+  // const payload = await verify(
+  //   accessToken,
+  //   import.meta.env.VITE_ACCESS_TOKEN_SECRET,
+  // )
 
   return json({})
 }

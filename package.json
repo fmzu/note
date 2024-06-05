@@ -17,6 +17,7 @@
     "migrate": "drizzle-kit generate && wrangler d1 migrations apply note --local"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.2.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
@@ -67,7 +68,8 @@
     "react-resizable-panels": "^2.0.19",
     "sonner": "^1.4.41",
     "valibot": "^0.30.0",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.7.3",

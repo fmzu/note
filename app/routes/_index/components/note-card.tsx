@@ -6,6 +6,12 @@ import { useState } from "react"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent } from "~/components/ui/card"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip"
 
 type Props = {
   uuid: string
@@ -98,16 +104,25 @@ export function NoteCard(props: Props) {
         </div>
         <div className="flex justify-end">
           {props.isArchived === false && (
-            <Button
-              className="rounded-full"
-              variant={"secondary"}
-              size={"icon"}
-              onClick={() => {
-                onArchive()
-              }}
-            >
-              <ArchiveRestore className="w-4" />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="rounded-full"
+                    variant={"secondary"}
+                    size={"icon"}
+                    onClick={() => {
+                      onArchive()
+                    }}
+                  >
+                    <ArchiveRestore className="w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{"メモをアーカイブする"}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
           <Button
             className="rounded-full"

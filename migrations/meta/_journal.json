@@ -1,12 +1,12 @@
 {
-  "version": "6",
+  "version": "7",
   "dialect": "sqlite",
   "entries": [
     {
       "idx": 0,
       "version": "6",
-      "when": 1717235749487,
-      "tag": "0000_cute_sleeper",
+      "when": 1717555038268,
+      "tag": "0000_natural_martin_li",
       "breakpoints": true
     }
   ]
