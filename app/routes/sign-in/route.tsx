@@ -1,29 +1,39 @@
-import { Link } from "@remix-run/react"
-import { useMutation } from "@tanstack/react-query"
+import { Link, useNavigate } from "@remix-run/react"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
+import { useMutation } from "@tanstack/react-query"
+import { client } from "~/lib/client"
+import { toast } from "sonner"
 
 export default function LoginPage() {
+  const navigate = useNavigate()
+
   const [loginId, setLoginId] = useState("")
 
   const [loginPassword, setLoginPassword] = useState("")
 
   const mutation = useMutation({
     async mutationFn() {
-      return fetch("/api/auth/sign-in", {
-        method: "POST",
-        body: JSON.stringify({
+      const resp = await client.api.auth.sign.in.$post({
+        json: {
           login: loginId,
           password: loginPassword,
-        }),
+        },
       })
+      const json = await resp.json()
+      console.log(json)
+      return json
     },
   })
 
   const onSubmit = async () => {
     const result = await mutation.mutateAsync()
-    const json = await result.json()
+    if (result.message === null) {
+      navigate("/")
+      return
+    }
+    toast(result.message)
   }
 
   return (

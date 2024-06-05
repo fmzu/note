@@ -3,101 +3,97 @@ import { Hono } from "hono"
 import { genSaltSync, hashSync, compareSync } from "bcrypt-ts"
 import { usersTable } from "~/schema"
 import { eq } from "drizzle-orm"
-import { sign } from "hono/jwt"
-import { createCookie } from "@remix-run/cloudflare"
-import { accessTokenCookie } from "~/lib/access-token-cookie"
+import { zValidator } from "@hono/zod-validator"
+import { z } from "zod"
+import { signAuthToken } from "~/lib/sign-auth-token"
+import { appConfig } from "~/lib/app-config"
+import { createAuthHeaders } from "~/lib/create-auth-headers"
 
 export const authRoute = new Hono<{ Bindings: { DB: D1Database } }>()
+  .post(
+    "/sign/up",
+    zValidator(
+      "json",
+      z.object({
+        login: z.string(),
+        password: z.string(),
+      }),
+    ),
+    async (c) => {
+      const json = c.req.valid("json")
 
-authRoute.post("/sign-up", async (c) => {
-  const json = await c.req.json()
+      const db = drizzle(c.env.DB)
 
-  const db = drizzle(c.env.DB)
+      const salt = genSaltSync(10)
 
-  const salt = genSaltSync(10)
+      const hashedPassword = hashSync(json.password, salt)
 
-  const hashedPassword = hashSync(json.password, salt)
+      const userUuid = crypto.randomUUID()
 
-  await db.insert(usersTable).values({
-    uuid: crypto.randomUUID(),
-    name: "guest",
-    email: json.login,
-    login: json.login,
-    hashedPassword: hashedPassword,
-    avatarIconURL: json.avatarIconURL,
-  })
+      await db.insert(usersTable).values({
+        uuid: userUuid,
+        name: "guest",
+        email: json.login,
+        login: json.login,
+        hashedPassword: hashedPassword,
+        avatarIconURL: null,
+      })
 
-  console.log(json)
+      const { accessToken, refreshToken } = await signAuthToken({
+        userUuid: userUuid,
+        accessTokenExpiresIn: appConfig.accessTokenExpiresIn,
+        refreshTokenExpiresIn: appConfig.refreshTokenExpiresIn,
+      })
 
-  return new Response()
-})
+      const headers = await createAuthHeaders({ accessToken, refreshToken })
 
-authRoute.post("/sign-in", async (c) => {
-  const json = await c.req.json()
-
-  const db = drizzle(c.env.DB)
-
-  const user = await db
-    .select()
-    .from(usersTable)
-    .where(eq(usersTable.login, json.login))
-    .get()
-
-  console.log(user)
-
-  if (user === undefined) {
-    return new Response("Not found", { status: 404 })
-  }
-
-  if (user.hashedPassword === null) {
-    return new Response("Not found", { status: 404 })
-  }
-
-  const result = compareSync(json.password, user.hashedPassword)
-  console.log(result)
-
-  if (result === false) {
-    return new Response("パスワードが違います", { status: 400 })
-  }
-
-  const accessTokenExpiresIn = Math.floor(Date.now() / 1000) + 60 * 60
-
-  const accessToken = await sign(
-    {
-      user_id: user.uuid,
-      // 1時間
-      exp: accessTokenExpiresIn,
+      return c.json({}, { headers })
     },
-    import.meta.env.VITE_ACCESS_TOKEN_SECRET,
   )
+  .post(
+    "/sign/in",
+    zValidator(
+      "json",
+      z.object({
+        login: z.string(),
+        password: z.string(),
+      }),
+    ),
+    async (c) => {
+      const json = c.req.valid("json")
 
-  const refreshTokenExpiresIn =
-    Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 14
+      const db = drizzle(c.env.DB)
 
-  const refreshToken = await sign(
-    {
-      user_id: user.uuid,
-      // 14日
-      exp: refreshTokenExpiresIn,
+      const user = await db
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.login, json.login))
+        .get()
+
+      console.log(user)
+
+      if (user === undefined) {
+        return c.json({ message: "ユーザが見つかりません" }, { status: 404 })
+      }
+
+      if (user.hashedPassword === null) {
+        return c.json({ message: "パスワードが違います" }, { status: 404 })
+      }
+
+      const result = compareSync(json.password, user.hashedPassword)
+
+      if (result === false) {
+        return c.json({ message: "パスワードが違います" }, { status: 400 })
+      }
+
+      const { accessToken, refreshToken } = await signAuthToken({
+        userUuid: user.uuid,
+        accessTokenExpiresIn: appConfig.accessTokenExpiresIn,
+        refreshTokenExpiresIn: appConfig.refreshTokenExpiresIn,
+      })
+
+      const headers = await createAuthHeaders({ accessToken, refreshToken })
+
+      return c.json({ message: null }, { headers })
     },
-    import.meta.env.VITE_REFRESH_TOKEN_SECRET,
   )
-
-  const serializedAccessTokenCookie =
-    await accessTokenCookie.serialize(accessToken)
-
-  const headers = new Headers()
-
-  headers.append("Set-Cookie", serializedAccessTokenCookie)
-
-  const refreshTokenCookie = createCookie("refresh_token", {
-    maxAge: refreshTokenExpiresIn,
-  })
-
-  const serializedRefreshTokenCookie =
-    await refreshTokenCookie.serialize(refreshToken)
-
-  headers.append("Set-Cookie", serializedRefreshTokenCookie)
-
-  return c.json({}, { headers })
-})

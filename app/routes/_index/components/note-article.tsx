@@ -1,14 +1,12 @@
 import { NewNoteForm } from "./new-note-form"
 import { NoteCard } from "./note-card"
 import { useQuery } from "@tanstack/react-query"
-import { hc } from "hono/client"
-import type { Api } from "api/route"
+import { client } from "~/lib/client"
 
 export function NoteArticle() {
   const query = useQuery({
     queryKey: ["posts"],
     async queryFn() {
-      const client = hc<Api>("/")
       const result = await client.api.posts.$get()
       return await result.json()
     },

@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
+import { client } from "~/lib/client"
 
 export default function LoginPage() {
   const [loginId, setLoginId] = useState("")
@@ -11,13 +12,15 @@ export default function LoginPage() {
 
   const mutation = useMutation({
     async mutationFn() {
-      return fetch("/api/auth/sign-up", {
-        method: "POST",
-        body: JSON.stringify({
+      const resp = await client.api.auth.sign.up.$post({
+        json: {
           login: loginId,
           password: loginPassword,
-        }),
+        },
       })
+      const json = await resp.json()
+      console.log(json)
+      return json
     },
   })
 

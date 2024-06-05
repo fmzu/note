@@ -1,7 +1,6 @@
 import { createCookie } from "@remix-run/cloudflare"
-
-const accessTokenExpiresIn = Math.floor(Date.now() / 1000) + 60 * 60
+import { appConfig } from "./app-config"
 
 export const accessTokenCookie = createCookie("access_token", {
-  maxAge: accessTokenExpiresIn,
+  maxAge: appConfig.accessTokenExpiresIn,
 })

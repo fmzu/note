@@ -8,6 +8,8 @@ import {
 import stylesheet from "~/globals.css?url"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import type { LinksFunction } from "@remix-run/cloudflare"
+import { AuthContextProvider } from "./components/auth-context-provider"
+import { Toaster } from "./components/ui/sonner"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -25,9 +27,10 @@ export function Layout(props: Props) {
         <Links />
       </head>
       <body>
-        {props.children}
+        <AuthContextProvider>{props.children}</AuthContextProvider>
         <ScrollRestoration />
         <Scripts />
+        <Toaster />
       </body>
     </html>
   )
