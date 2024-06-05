@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import { ImagePlus } from "lucide-react"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
-import { Input } from "~/components/ui/input"
+import { Textarea } from "~/components/ui/textarea"
 
 type Props = {
   onRefetch(): void
@@ -33,9 +33,9 @@ export function NewNoteForm(props: Props) {
         event.preventDefault()
         onSubmit()
       }}
-      className="flex gap-2"
+      className="flex gap-2 items-end"
     >
-      <Input
+      <Textarea
         name={"body"}
         placeholder="メモ"
         value={text}
