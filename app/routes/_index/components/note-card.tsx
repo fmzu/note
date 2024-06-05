@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import type { Api } from "api/route"
 import { type InferResponseType, hc } from "hono/client"
-import { Trash2, ArchiveRestore, Bookmark } from "lucide-react"
+import { Trash2, ArchiveRestore, Bookmark, ArchiveX } from "lucide-react"
 import { useState } from "react"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
@@ -73,7 +73,10 @@ export function NoteCard(props: Props) {
     props.onRefetch()
   }
 
+  const [isArchived, setArchived] = useState(props.isArchived)
+
   const onArchive = async () => {
+    setArchived(!isArchived)
     await archiveMutation.mutateAsync()
     props.onRefetch()
   }
@@ -103,27 +106,31 @@ export function NoteCard(props: Props) {
           <Badge>{"タグ"}</Badge>
         </div>
         <div className="flex justify-end">
-          {props.isArchived === false && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    className="rounded-full"
-                    variant={"secondary"}
-                    size={"icon"}
-                    onClick={() => {
-                      onArchive()
-                    }}
-                  >
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="rounded-full"
+                  variant={"secondary"}
+                  size={"icon"}
+                  onClick={() => {
+                    onArchive()
+                  }}
+                >
+                  {isArchived ? (
+                    <ArchiveX className="w-4" />
+                  ) : (
                     <ArchiveRestore className="w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{"メモをアーカイブする"}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  {isArchived ? "アーカイブから戻す" : "メモをアーカイブする"}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <Button
             className="rounded-full"
             variant={"secondary"}
