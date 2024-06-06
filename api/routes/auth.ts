@@ -70,8 +70,6 @@ export const authRoute = new Hono<{ Bindings: { DB: D1Database } }>()
         .where(eq(usersTable.login, json.login))
         .get()
 
-      console.log(user)
-
       if (user === undefined) {
         return c.json({ message: "ユーザが見つかりません" }, { status: 404 })
       }

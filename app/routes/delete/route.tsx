@@ -5,6 +5,7 @@ import { NoteHeader } from "../_index/components/note-header"
 import { NoteNavigation } from "../_index/components/note-navigation"
 import { Separator } from "~/components/ui/separator"
 import { NoteCard } from "../_index/components/note-card"
+
 export default function DeletePage() {
   const query = useQuery({
     queryKey: ["posts"],
@@ -32,16 +33,19 @@ export default function DeletePage() {
               <p>{"ゴミ箱内のメモは 7 日後に削除されます。"}</p>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {query.data?.map((post) => (
-                <NoteCard
-                  key={post.uuid}
-                  uuid={post.uuid}
-                  text={post.text}
-                  onRefetch={onRefetch}
-                  isBookmarked={post.isBookmarked}
-                  isArchived={post.isArchived ?? false}
-                />
-              ))}
+              {query.data?.map(
+                (post) =>
+                  post.isDeleted && (
+                    <NoteCard
+                      key={post.uuid}
+                      uuid={post.uuid}
+                      text={post.text}
+                      onRefetch={onRefetch}
+                      isBookmarked={post.isBookmarked}
+                      isArchived={post.isArchived ?? false}
+                    />
+                  ),
+              )}
             </div>
           </div>
         </div>

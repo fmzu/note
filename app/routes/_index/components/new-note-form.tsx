@@ -3,6 +3,8 @@ import { ImagePlus } from "lucide-react"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Textarea } from "~/components/ui/textarea"
+import { hc } from "hono/client"
+import type { Api } from "api/route"
 
 type Props = {
   onRefetch(): void
@@ -13,10 +15,11 @@ export function NewNoteForm(props: Props) {
 
   const mutation = useMutation({
     async mutationFn() {
-      return fetch("/api/posts", {
-        method: "POST",
-        body: JSON.stringify({ text: text }),
+      const client = hc<Api>("/")
+      const result = await client.api.posts.$post({
+        json: { text },
       })
+      return await result.json()
     },
   })
 

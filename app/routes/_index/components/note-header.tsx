@@ -4,7 +4,6 @@ import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { useContext } from "react"
 import { AuthContext } from "~/contexts/auth-context"
-import {} from "~/components/ui/avatar"
 import { Separator } from "~/components/ui/separator"
 import { AvatarPopover } from "./avatar-popover"
 

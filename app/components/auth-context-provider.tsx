@@ -13,11 +13,9 @@ export function AuthContextProvider(props: Props) {
 
   useEffect(() => {
     accessTokenCookie.parse(document.cookie).then((value) => {
-      console.log(value)
       if (!value) return
       try {
         const result = decode(value)
-        console.log("payload", result.payload.user_id)
         setValue({
           isLoggedIn: true,
           userId: result.payload.user_id as string,

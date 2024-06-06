@@ -7,7 +7,9 @@ export function NoteArticle() {
   const query = useQuery({
     queryKey: ["posts"],
     async queryFn() {
-      const result = await client.api.posts.$get()
+      const result = await client.api.posts.$get({
+        query: { is_archived: "false" },
+      })
       return await result.json()
     },
   })

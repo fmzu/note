@@ -12,7 +12,9 @@ export const postsTable = sqliteTable("posts", {
   isDeleted: integer("is_deleted", { mode: "boolean" })
     .notNull()
     .default(false),
-  isArchived: integer("is_archived", { mode: "boolean" }),
+  isArchived: integer("is_archived", { mode: "boolean" })
+    .notNull()
+    .default(false),
 })
 
 // export const postRelations = relations(postsTable, (fn) => {

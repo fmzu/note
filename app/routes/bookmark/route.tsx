@@ -19,10 +19,10 @@ export const meta: MetaFunction = () => {
 
 export default function BookmarkPage() {
   const query = useQuery({
-    queryKey: ["posts"],
+    queryKey: ["bookmarks"],
     async queryFn() {
       const client = hc<Api>("/")
-      const result = await client.api.posts.$get()
+      const result = await client.api.bookmarks.$get()
       return await result.json()
     },
   })
@@ -41,19 +41,16 @@ export default function BookmarkPage() {
         <div className="w-full">
           <div className="p-4 space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {query.data?.map(
-                (post) =>
-                  post.isBookmarked && (
-                    <NoteCard
-                      key={post.uuid}
-                      uuid={post.uuid}
-                      text={post.text}
-                      onRefetch={onRefetch}
-                      isBookmarked={post.isBookmarked}
-                      isArchived={post.isArchived ?? false}
-                    />
-                  ),
-              )}
+              {query.data?.map((bookmark) => (
+                <NoteCard
+                  key={bookmark.post.uuid}
+                  uuid={bookmark.post.uuid}
+                  text={bookmark.post.text}
+                  onRefetch={onRefetch}
+                  isBookmarked={true}
+                  isArchived={bookmark.post.isArchived ?? false}
+                />
+              ))}
             </div>
           </div>
         </div>

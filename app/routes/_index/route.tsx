@@ -14,8 +14,6 @@ import { AuthContext } from "~/contexts/auth-context"
 export default function Index() {
   const auth = useContext(AuthContext)
 
-  console.log(auth.isLoggedIn)
-
   // const query = useQuery({
   //   queryKey: ["posts"],
   //   async queryFn() {
