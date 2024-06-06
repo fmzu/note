@@ -1,12 +1,15 @@
 import { Separator } from "~/components/ui/separator"
 import { AccountNavigation } from "./conponents/account-navigation"
+import { AvatorPopover } from "../_index/components/avator-popover"
 
 export default function AccountLoginPage() {
   return (
     <div>
-      <div className="p-4 h-16 bg-lime-300 flex justify-between items-center space-x-4">
-        {"Header"}
+      <div className="p-4 h-16 flex justify-between items-center space-x-4">
+        <p>{"Header"}</p>
+        <AvatorPopover />
       </div>
+      <Separator />
       <div className="flex">
         <AccountNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />
