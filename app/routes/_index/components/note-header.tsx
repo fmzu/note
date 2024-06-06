@@ -5,8 +5,8 @@ import { Input } from "~/components/ui/input"
 import { useContext } from "react"
 import { AuthContext } from "~/contexts/auth-context"
 import {} from "~/components/ui/avatar"
-import { AvatorPopover } from "./avator-popover"
 import { Separator } from "~/components/ui/separator"
+import { AvatarPopover } from "./avatar-popover"
 
 export function NoteHeader() {
   const auth = useContext(AuthContext)
@@ -16,7 +16,7 @@ export function NoteHeader() {
       <div className="p-4 h-16 flex justify-between items-center space-x-4">
         <Input placeholder="検索" className="max-w-4xl" />
         {auth.isLoggedIn ? (
-          <AvatorPopover />
+          <AvatarPopover />
         ) : (
           <Link to={"/sign-in"}>
             <Button className="flex justify-center items-center">

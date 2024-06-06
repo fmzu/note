@@ -3,14 +3,14 @@ import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Separator } from "~/components/ui/separator"
-import { AccountNavigation } from "../account._index/conponents/account-navigation"
-import { AvatorPopover } from "../_index/components/avator-popover"
+import { AccountNavigation } from "../account._index/components/account-navigation"
+import { AvatarPopover } from "../_index/components/avatar-popover"
 
 export default function AccountPasswordPage() {
-  const [correnteye, setCorrentEye] = useState(true)
+  const [currentEye, setCurrentEye] = useState(true)
 
-  const onCorrentEye = () => {
-    setCorrentEye(!correnteye)
+  const onCurrentEye = () => {
+    setCurrentEye(!currentEye)
   }
 
   const [newEye, setNewEye] = useState(true)
@@ -23,7 +23,7 @@ export default function AccountPasswordPage() {
     <div>
       <div className="p-4 h-16 flex justify-between items-center space-x-4">
         <p>{"Header"}</p>
-        <AvatorPopover />
+        <AvatarPopover />
       </div>
       <Separator />
       <div className="flex">
@@ -42,10 +42,10 @@ export default function AccountPasswordPage() {
               <Button
                 variant={"ghost"}
                 onClick={() => {
-                  onCorrentEye()
+                  onCurrentEye()
                 }}
               >
-                {correnteye ? (
+                {currentEye ? (
                   <Eye className="w-4" />
                 ) : (
                   <EyeOff className="w-4" />

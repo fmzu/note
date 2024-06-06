@@ -2,15 +2,15 @@ import {} from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Separator } from "~/components/ui/separator"
-import { AccountNavigation } from "../account._index/conponents/account-navigation"
-import { AvatorPopover } from "../_index/components/avator-popover"
+import { AccountNavigation } from "../account._index/components/account-navigation"
+import { AvatarPopover } from "../_index/components/avatar-popover"
 
 export default function AccountLoginPage() {
   return (
     <div>
       <div className="p-4 h-16 flex justify-between items-center space-x-4">
         <p>{"Header"}</p>
-        <AvatorPopover />
+        <AvatarPopover />
       </div>
       <Separator />
       <div className="flex">

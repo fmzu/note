@@ -9,7 +9,7 @@ import {
 } from "~/components/ui/popover"
 import { Separator } from "~/components/ui/separator"
 
-export function AvatorPopover() {
+export function AvatarPopover() {
   return (
     <Popover>
       <PopoverTrigger asChild>
