@@ -2,7 +2,6 @@ import { Link } from "@remix-run/react"
 import { LogOut, SunMoon, UserRound } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Button } from "~/components/ui/button"
-import {} from "~/components/ui/dialog"
 import {
   Popover,
   PopoverContent,
