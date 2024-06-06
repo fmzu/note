@@ -1,9 +1,9 @@
-import { Link } from "@remix-run/react"
-import { Eye, EyeOff, LockKeyhole, NotebookPen, Smile } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Separator } from "~/components/ui/separator"
+import { AccountNavigation } from "../account._index/conponents/account-navigation"
 
 export default function AccountPasswordPage() {
   const [correnteye, setCorrentEye] = useState(true)
@@ -24,38 +24,7 @@ export default function AccountPasswordPage() {
         {"Header"}
       </div>
       <div className="flex">
-        <div className="flex flex-col w-64 h-screen">
-          <Link to="/" className="p-2">
-            <Button
-              className="flex space-x-2 h-16 w-full items-center"
-              variant={"ghost"}
-            >
-              <NotebookPen className="w-4 mr-2" />
-              {"ノート"}
-            </Button>
-          </Link>
-          <Separator />
-          <Link to="/account/login" className="p-2">
-            <Button
-              className="flex space-x-2 h-16 w-full items-center"
-              variant={"ghost"}
-            >
-              <Smile className="w-4 mr-2" />
-              {"ユーザID"}
-            </Button>
-          </Link>
-          <Separator />
-          <Link to="/account/password" className="p-2">
-            <Button
-              className="flex space-x-2 h-16 w-full items-center"
-              variant={"ghost"}
-            >
-              <LockKeyhole className="w-4 mr-2" />
-              {"パスワード"}
-            </Button>
-          </Link>
-          <Separator />
-        </div>
+        <AccountNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />
         <div className="w-full p-4 space-y-8">
           <p className="text-3xl font-bold">{"パスワード"}</p>
