@@ -1,6 +1,7 @@
 import { Separator } from "~/components/ui/separator"
 import { AccountNavigation } from "./components/account-navigation"
 import { AvatarPopover } from "../_index/components/avatar-popover"
+import { AccountArticle } from "./components/account-article"
 
 export default function AccountLoginPage() {
   return (
@@ -13,7 +14,9 @@ export default function AccountLoginPage() {
       <div className="flex">
         <AccountNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />
-        <div className="w-full">{"アカウント名とアイコンの変更"}</div>
+        <div className="justify-center w-full">
+          <AccountArticle />
+        </div>
       </div>
     </div>
   )

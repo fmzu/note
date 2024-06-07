@@ -29,49 +29,55 @@ export default function AccountPasswordPage() {
       <div className="flex">
         <AccountNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />
-        <div className="w-full p-4 space-y-8">
-          <p className="text-3xl font-bold">{"パスワード"}</p>
-          <div className="flex flex-col space-y-2">
-            <p>{"現在のパスワード"}</p>
-            <div className="flex space-x-2">
-              <Input
-                className="w-80"
-                placeholder={"現在のパスワード"}
-                type="password"
-              />
-              <Button
-                variant={"ghost"}
-                onClick={() => {
-                  onCurrentEye()
-                }}
-              >
-                {currentEye ? (
-                  <Eye className="w-4" />
-                ) : (
-                  <EyeOff className="w-4" />
-                )}
-              </Button>
+        <div className="justify-center w-full">
+          <div className="flex flex-col w-full p-4 space-y-8">
+            <p className="text-3xl font-bold">{"パスワード"}</p>
+            <div className="flex flex-col space-y-2">
+              <p>{"現在のパスワード"}</p>
+              <div className="flex space-x-2">
+                <Input
+                  className="w-80"
+                  placeholder={"現在のパスワード"}
+                  type="password"
+                />
+                <Button
+                  variant={"ghost"}
+                  onClick={() => {
+                    onCurrentEye()
+                  }}
+                >
+                  {currentEye ? (
+                    <Eye className="w-4" />
+                  ) : (
+                    <EyeOff className="w-4" />
+                  )}
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <p>{"新しいパスワード"}</p>
-            <div className="flex space-x-2">
-              <Input
-                className="w-80"
-                placeholder={"新しいパスワード"}
-                type="password"
-              />
-              <Button
-                variant={"ghost"}
-                onClick={() => {
-                  onNewEye()
-                }}
-              >
-                {newEye ? <Eye className="w-4" /> : <EyeOff className="w-4" />}
-              </Button>
+            <div className="flex flex-col space-y-2">
+              <p>{"新しいパスワード"}</p>
+              <div className="flex space-x-2">
+                <Input
+                  className="w-80"
+                  placeholder={"新しいパスワード"}
+                  type="password"
+                />
+                <Button
+                  variant={"ghost"}
+                  onClick={() => {
+                    onNewEye()
+                  }}
+                >
+                  {newEye ? (
+                    <Eye className="w-4" />
+                  ) : (
+                    <EyeOff className="w-4" />
+                  )}
+                </Button>
+              </div>
             </div>
+            <Button className="w-80">{"変更を保存"}</Button>
           </div>
-          <Button>{"変更を保存"}</Button>
         </div>
       </div>
     </div>

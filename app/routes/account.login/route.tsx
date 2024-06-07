@@ -26,7 +26,7 @@ export default function AccountLoginPage() {
             <p>{"新しいユーザID"}</p>
             <Input className="w-80" placeholder={"ユーザID"} />
           </div>
-          <Button>{"変更を保存"}</Button>
+          <Button className="w-80">{"変更を保存"}</Button>
         </div>
       </div>
     </div>
