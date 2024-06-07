@@ -11,7 +11,7 @@ CREATE TABLE `posts` (
 	`text` text(2048) NOT NULL,
 	`created_at` text(256) DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`is_deleted` integer DEFAULT false NOT NULL,
-	`is_archived` integer
+	`is_archived` integer DEFAULT false NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `users` (

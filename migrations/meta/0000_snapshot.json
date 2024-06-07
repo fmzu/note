@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "a2d0b503-20d8-4cac-81d7-f5897521dd6d",
+  "id": "efe0b399-711e-461b-b930-7252e82b6cf7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "bookmarks": {
@@ -85,8 +85,9 @@
           "name": "is_archived",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
         }
       },
       "indexes": {
