@@ -38,7 +38,6 @@ export default function ArchivePage() {
   return (
     <div>
       <NoteHeader />
-      {"ArchivePage"}
       <div className="flex">
         <NoteNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />

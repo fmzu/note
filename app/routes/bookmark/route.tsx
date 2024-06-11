@@ -34,7 +34,6 @@ export default function BookmarkPage() {
   return (
     <div>
       <NoteHeader />
-      {"BookmarkPage"}
       <div className="flex">
         <NoteNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />

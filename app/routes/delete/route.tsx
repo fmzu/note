@@ -23,7 +23,6 @@ export default function DeletePage() {
   return (
     <div>
       <NoteHeader />
-      {"DeletePage"}
       <div className="flex">
         <NoteNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />

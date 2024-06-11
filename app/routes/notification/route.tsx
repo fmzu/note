@@ -18,7 +18,6 @@ export default function NotificationPage() {
   return (
     <div>
       <NoteHeader />
-      {"NotificationPage"}
       <div className="flex">
         <NoteNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />
