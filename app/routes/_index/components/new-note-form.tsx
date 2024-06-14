@@ -1,10 +1,12 @@
 import { useMutation } from "@tanstack/react-query"
 import { ImagePlus } from "lucide-react"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Textarea } from "~/components/ui/textarea"
 import { hc } from "hono/client"
 import type { Api } from "api/route"
+import { AuthContext } from "~/contexts/auth-context"
+import { accessTokenCookie } from "~/lib/access-token-cookie"
 
 type Props = {
   onRefetch(): void
@@ -13,11 +15,15 @@ type Props = {
 export function NewNoteForm(props: Props) {
   const [text, setText] = useState("")
 
+  const auth = useContext(AuthContext)
+
   const mutation = useMutation({
     async mutationFn() {
       const client = hc<Api>("/")
+      const accessToken = await accessTokenCookie.parse(document.cookie)
       const result = await client.api.posts.$post({
         json: { text },
+        header: { authorization: `Bearer ${accessToken}` },
       })
       return await result.json()
     },
