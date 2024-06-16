@@ -31,8 +31,8 @@ export function NewNoteForm(props: Props) {
 
   const isSendButtonEnabled = text.trim() !== "" && text.length > 0
 
-  const onSubmit = () => {
-    mutation.mutate()
+  const onSubmit = async () => {
+    await mutation.mutateAsync()
     props.onRefetch()
   }
 

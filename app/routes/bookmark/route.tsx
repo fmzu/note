@@ -45,9 +45,10 @@ export default function BookmarkPage() {
                   key={bookmark.post.uuid}
                   uuid={bookmark.post.uuid}
                   text={bookmark.post.text}
-                  onRefetch={onRefetch}
                   isBookmarked={true}
                   isArchived={bookmark.post.isArchived ?? false}
+                  isDeleted={bookmark.post.isDeleted}
+                  onRefetch={onRefetch}
                 />
               ))}
             </div>

@@ -11,7 +11,11 @@ export default function DeletePage() {
     queryKey: ["posts"],
     async queryFn() {
       const client = hc<Api>("/")
-      const result = await client.api.posts.$get()
+      const result = await client.api.posts.$get({
+        query: {
+          is_deleted: "true",
+        },
+      })
       return await result.json()
     },
   })
@@ -39,9 +43,10 @@ export default function DeletePage() {
                       key={post.uuid}
                       uuid={post.uuid}
                       text={post.text}
-                      onRefetch={onRefetch}
                       isBookmarked={post.isBookmarked}
                       isArchived={post.isArchived ?? false}
+                      isDeleted={true}
+                      onRefetch={onRefetch}
                     />
                   ),
               )}

@@ -138,6 +138,7 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
       "query",
       object({
         is_archived: z.string().optional(),
+        is_deleted: z.string().optional(),
       }),
     ),
     async (c) => {
