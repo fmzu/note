@@ -1,3 +1,4 @@
+import { signOut } from "@hono/auth-js/react"
 import { Link } from "@remix-run/react"
 import { LogOut, SunMoon, UserRound } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
@@ -40,7 +41,13 @@ export function AvatarPopover() {
             {"テーマ"}
           </Button>
           <Separator />
-          <Button className="flex space-x-2 w-full" variant={"ghost"}>
+          <Button
+            className="flex space-x-2 w-full"
+            variant={"ghost"}
+            onClick={() => {
+              signOut()
+            }}
+          >
             <LogOut className="w-4 mr-2" />
             {"ログアウト"}
           </Button>

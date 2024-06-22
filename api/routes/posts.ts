@@ -2,10 +2,9 @@ import { eq, desc, and } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
 import { bookmarksTable, postsTable, usersTable } from "~/schema"
-import { object, string } from "zod"
+import { object } from "zod"
 import { zValidator } from "@hono/zod-validator"
 import { z } from "zod"
-import { decode } from "hono/jwt"
 
 export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
   .post(
@@ -16,24 +15,20 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
         text: z.string(),
       }),
     ),
-    zValidator("header", object({ authorization: string() })),
     async (c) => {
+      const auth = c.get("authUser")
+      if (auth?.user === undefined) {
+        return c.json({ success: false }, { status: 401 })
+      }
+
       const db = drizzle(c.env.DB)
 
       const body = c.req.valid("json")
 
-      const authorization = c.req.valid("header").authorization
-
-      const accessToken = authorization.split(" ")[1]
-
-      const decodedAccessToken = decode(accessToken)
-
-      const userId = decodedAccessToken.payload.user_id as string
-
       const user = await db
         .select()
         .from(usersTable)
-        .where(eq(usersTable.uuid, userId))
+        .where(eq(usersTable.uuid, auth.user?.id))
         .get()
 
       if (user === undefined) {

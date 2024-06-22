@@ -3,8 +3,8 @@ import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { useMutation } from "@tanstack/react-query"
-import { client } from "~/lib/client"
 import { toast } from "sonner"
+import { signIn } from "@hono/auth-js/react"
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -15,24 +15,25 @@ export default function LoginPage() {
 
   const mutation = useMutation({
     async mutationFn() {
-      const resp = await client.api.auth.sign.in.$post({
-        json: {
-          login: loginId,
-          password: loginPassword,
-        },
+      const resp = await signIn("credentials", {
+        email: loginId,
+        password: loginPassword,
+        redirect: false,
       })
-      const json = await resp.json()
-      return json
+      if (resp?.status !== 200) {
+        return "ログインに失敗しました"
+      }
+      return null
     },
   })
 
   const onSubmit = async () => {
     const result = await mutation.mutateAsync()
-    if (result.message === null) {
+    if (result === null) {
       navigate("/")
       return
     }
-    toast(result.message)
+    toast(result)
   }
 
   return (

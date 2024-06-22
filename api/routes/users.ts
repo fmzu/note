@@ -2,12 +2,43 @@ import { drizzle } from "drizzle-orm/d1"
 import { Hono } from "hono"
 import { eq } from "drizzle-orm"
 import { usersTable } from "~/schema"
+import { zValidator } from "@hono/zod-validator"
+import { object, string } from "zod"
+import { genSaltSync, hashSync } from "bcrypt-ts"
 
 export const usersRoute = new Hono<{ Bindings: { DB: D1Database } }>()
+  .post(
+    "/",
+    zValidator(
+      "json",
+      object({
+        email: string(),
+        password: string(),
+      }),
+    ),
+    async (c) => {
+      const json = c.req.valid("json")
 
-  .post("/", async (c) => {
-    return new Response()
-  })
+      const db = drizzle(c.env.DB)
+
+      const salt = genSaltSync(10)
+
+      const hashedPassword = hashSync(json.password, salt)
+
+      const userUuid = crypto.randomUUID()
+
+      await db.insert(usersTable).values({
+        uuid: userUuid,
+        name: "guest",
+        email: json.email,
+        login: json.email,
+        hashedPassword: hashedPassword,
+        avatarIconURL: null,
+      })
+
+      return c.json({}, {})
+    },
+  )
 
   .get("/", async (c) => {
     const db = drizzle(c.env.DB)

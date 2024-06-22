@@ -12,9 +12,9 @@ export default function LoginPage() {
 
   const mutation = useMutation({
     async mutationFn() {
-      const resp = await client.api.auth.sign.up.$post({
+      const resp = await client.api.users.$post({
         json: {
-          login: loginId,
+          email: loginId,
           password: loginPassword,
         },
       })
