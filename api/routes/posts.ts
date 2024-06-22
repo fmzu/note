@@ -5,10 +5,12 @@ import { bookmarksTable, postsTable, usersTable } from "~/schema"
 import { object } from "zod"
 import { zValidator } from "@hono/zod-validator"
 import { z } from "zod"
+import { verifyAuth } from "@hono/auth-js"
 
 export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
   .post(
     "/",
+    verifyAuth(),
     zValidator(
       "json",
       z.object({
@@ -17,7 +19,7 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
     ),
     async (c) => {
       const auth = c.get("authUser")
-      if (auth?.user === undefined) {
+      if (typeof auth?.session.user?.email !== "string") {
         return c.json({ success: false }, { status: 401 })
       }
 
@@ -28,7 +30,7 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
       const user = await db
         .select()
         .from(usersTable)
-        .where(eq(usersTable.uuid, auth.user?.id))
+        .where(eq(usersTable.email, auth.session.user.email))
         .get()
 
       if (user === undefined) {
