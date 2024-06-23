@@ -36,20 +36,19 @@ export default function DeletePage() {
               <p>{"ゴミ箱内のメモは 7 日後に削除されます。"}</p>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {query.data?.map(
-                (post) =>
-                  post.isDeleted && (
-                    <NoteCard
-                      key={post.uuid}
-                      uuid={post.uuid}
-                      text={post.text}
-                      isBookmarked={post.isBookmarked}
-                      isArchived={post.isArchived ?? false}
-                      isDeleted={true}
-                      onRefetch={onRefetch}
-                    />
-                  ),
-              )}
+              {query.data
+                ?.filter((post) => post.isDeleted)
+                .map((post) => (
+                  <NoteCard
+                    key={post.uuid}
+                    uuid={post.uuid}
+                    text={post.text}
+                    isBookmarked={post.isBookmarked}
+                    isArchived={post.isArchived ?? false}
+                    isDeleted={post.isDeleted ?? false}
+                    onRefetch={onRefetch}
+                  />
+                ))}
             </div>
           </div>
         </div>
