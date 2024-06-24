@@ -9,6 +9,7 @@ CREATE TABLE `posts` (
 	`uuid` text(256) NOT NULL,
 	`title` text(128) NOT NULL,
 	`text` text(2048) NOT NULL,
+	`user_id` integer NOT NULL,
 	`created_at` text(256) DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`is_deleted` integer DEFAULT false NOT NULL,
 	`is_archived` integer DEFAULT false NOT NULL
