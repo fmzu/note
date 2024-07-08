@@ -85,7 +85,12 @@ export function NoteCard(props: Props) {
   return (
     <Card>
       <CardContent className="p-4 space-y-2">
-        <div className="flex justify-end">
+        <p>{props.text}</p>
+        <div className="flex flex-wrap gap-1">
+          <Badge>{"タグ"}</Badge>
+          <Badge>{"タグ"}</Badge>
+        </div>
+        <div className="flex justify-end gap-x-1">
           {props.isDeleted === false && (
             <Button
               className="rounded-full"
@@ -102,13 +107,6 @@ export function NoteCard(props: Props) {
               )}
             </Button>
           )}
-        </div>
-        <p>{props.text}</p>
-        <div className="flex flex-wrap gap-1">
-          <Badge>{"タグ"}</Badge>
-          <Badge>{"タグ"}</Badge>
-        </div>
-        <div className="flex justify-end">
           {props.isDeleted === false && (
             <TooltipProvider>
               <Tooltip>

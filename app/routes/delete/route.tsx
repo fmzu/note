@@ -35,7 +35,7 @@ export default function DeletePage() {
             <div className="flex justify-center">
               <p>{"ゴミ箱内のメモは 7 日後に削除されます。"}</p>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="flex flex-col gap-y-2">
               {query.data
                 ?.filter((post) => post.isDeleted)
                 .map((post) => (
