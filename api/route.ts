@@ -4,7 +4,7 @@ import { usersRoute } from "./routes/users"
 import { tagsRoute } from "./routes/tags"
 import { bookmarksRoute } from "./routes/bookmarks"
 import { authHandler, initAuthConfig } from "@hono/auth-js"
-import { getAuthConfig } from "./auth-config"
+import { getAuthConfig } from "./get-auth-config"
 
 export const api = new Hono<{ Bindings: { DB: D1Database } }>()
   .use("*", initAuthConfig(getAuthConfig))
