@@ -28,7 +28,7 @@ export default function AccountPasswordPage() {
           <div className="flex flex-col w-full p-4 space-y-8">
             <p className="text-3xl font-bold">{"パスワード"}</p>
             <div className="flex flex-col space-y-2">
-              <p>{"現在のパスワード"}</p>
+              <p className="font-bold">{"現在のパスワード"}</p>
               <div className="flex space-x-2">
                 <Input
                   className="w-80"
@@ -50,7 +50,7 @@ export default function AccountPasswordPage() {
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <p>{"新しいパスワード"}</p>
+              <p className="font-bold">{"新しいパスワード"}</p>
               <div className="flex space-x-2">
                 <Input
                   className="w-80"

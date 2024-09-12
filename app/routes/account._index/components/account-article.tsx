@@ -11,10 +11,14 @@ export function AccountArticle() {
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-8">
           <div>
-            <p className="text-sm font-bold">{"表示名"}</p>
-            <Input defaultValue="現在のアカウント名" className="w-80" />
+            <p className="text-sm font-bold">{"現在の表示名"}</p>
+            <Input defaultValue="現在の表示名" className="w-80" />
+          </div>
+          <div>
+            <p className="text-sm font-bold">{"変更後の表示名"}</p>
+            <Input defaultValue="変更後の表示名" className="w-80" />
           </div>
           <Button>{"変更"}</Button>
         </div>
