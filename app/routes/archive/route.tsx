@@ -1,5 +1,4 @@
 import type { MetaFunction } from "@remix-run/react"
-import { NoteHeader } from "../_index/components/note-header"
 import { NoteNavigation } from "../_index/components/note-navigation"
 import { Separator } from "~/components/ui/separator"
 import { NoteCard } from "../_index/components/note-card"
@@ -36,26 +35,23 @@ export default function ArchivePage() {
   }
 
   return (
-    <div>
-      <NoteHeader />
-      <div className="flex">
-        <NoteNavigation />
-        <Separator style={{ height: "initial" }} orientation="vertical" />
-        <div className="w-full">
-          <div className="p-4 space-y-4">
-            <div className="flex flex-col gap-y-2">
-              {query.data?.map((post) => (
-                <NoteCard
-                  key={post.uuid}
-                  uuid={post.uuid}
-                  text={post.text}
-                  isBookmarked={post.isBookmarked}
-                  isArchived={post.isArchived ?? false}
-                  isDeleted={post.isDeleted}
-                  onRefetch={onRefetch}
-                />
-              ))}
-            </div>
+    <div className="flex">
+      <NoteNavigation />
+      <Separator style={{ height: "initial" }} orientation="vertical" />
+      <div className="w-full">
+        <div className="p-4 space-y-4">
+          <div className="flex flex-col gap-y-2">
+            {query.data?.map((post) => (
+              <NoteCard
+                key={post.uuid}
+                uuid={post.uuid}
+                text={post.text}
+                isBookmarked={post.isBookmarked}
+                isArchived={post.isArchived ?? false}
+                isDeleted={post.isDeleted}
+                onRefetch={onRefetch}
+              />
+            ))}
           </div>
         </div>
       </div>

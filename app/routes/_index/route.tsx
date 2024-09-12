@@ -4,7 +4,6 @@ import {
   type MetaFunction,
 } from "@remix-run/cloudflare"
 import { NoteArticle } from "./components/note-article"
-import { NoteHeader } from "./components/note-header"
 import { NoteNavigation } from "./components/note-navigation"
 import { accessTokenCookie } from "~/lib/access-token-cookie"
 import { Separator } from "~/components/ui/separator"
@@ -28,7 +27,6 @@ export default function Index() {
 
   return (
     <div>
-      <NoteHeader />
       <div className="flex">
         <NoteNavigation />
         <Separator style={{ height: "initial" }} orientation="vertical" />

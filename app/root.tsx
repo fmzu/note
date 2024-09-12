@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import type { LinksFunction } from "@remix-run/cloudflare"
 import { SessionProvider } from "@hono/auth-js/react"
 import { Toaster } from "./components/ui/sonner"
+import { NoteHeader } from "./routes/_index/components/note-header"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -41,6 +42,7 @@ const queryClient = new QueryClient()
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <NoteHeader />
       <Outlet />
     </QueryClientProvider>
   )

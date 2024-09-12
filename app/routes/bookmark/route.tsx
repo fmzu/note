@@ -1,5 +1,4 @@
 import type { MetaFunction } from "@remix-run/react"
-import { NoteHeader } from "../_index/components/note-header"
 import { NoteNavigation } from "../_index/components/note-navigation"
 import { Separator } from "~/components/ui/separator"
 import { NoteCard } from "../_index/components/note-card"
@@ -32,28 +31,25 @@ export default function BookmarkPage() {
   }
 
   return (
-    <div>
-      <NoteHeader />
-      <div className="flex">
-        <NoteNavigation />
-        <Separator style={{ height: "initial" }} orientation="vertical" />
-        <div className="w-full">
-          <div className="p-4 space-y-4">
-            <div className="flex flex-col gap-y-2">
-              {query.data
-                ?.filter((bookmark) => !bookmark.post.isDeleted)
-                .map((bookmark) => (
-                  <NoteCard
-                    key={bookmark.post.uuid}
-                    uuid={bookmark.post.uuid}
-                    text={bookmark.post.text}
-                    isBookmarked={true}
-                    isArchived={bookmark.post.isArchived ?? false}
-                    isDeleted={bookmark.post.isDeleted ?? false}
-                    onRefetch={onRefetch}
-                  />
-                ))}
-            </div>
+    <div className="flex">
+      <NoteNavigation />
+      <Separator style={{ height: "initial" }} orientation="vertical" />
+      <div className="w-full">
+        <div className="p-4 space-y-4">
+          <div className="flex flex-col gap-y-2">
+            {query.data
+              ?.filter((bookmark) => !bookmark.post.isDeleted)
+              .map((bookmark) => (
+                <NoteCard
+                  key={bookmark.post.uuid}
+                  uuid={bookmark.post.uuid}
+                  text={bookmark.post.text}
+                  isBookmarked={true}
+                  isArchived={bookmark.post.isArchived ?? false}
+                  isDeleted={bookmark.post.isDeleted ?? false}
+                  onRefetch={onRefetch}
+                />
+              ))}
           </div>
         </div>
       </div>
