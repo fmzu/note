@@ -32,8 +32,8 @@ export default function AccountPasswordPage() {
               <div className="flex space-x-2">
                 <Input
                   className="w-80"
-                  placeholder={"現在のパスワード"}
-                  type="password"
+                  defaultValue={"現在のパスワード"}
+                  type={currentEye ? "password" : "text"}
                 />
                 <Button
                   variant={"ghost"}
@@ -50,11 +50,11 @@ export default function AccountPasswordPage() {
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <p className="font-bold">{"新しいパスワード"}</p>
+              <p className="font-bold">{"変更後のパスワード"}</p>
               <div className="flex space-x-2">
                 <Input
                   className="w-80"
-                  placeholder={"新しいパスワード"}
+                  placeholder={"変更後のパスワード"}
                   type="password"
                 />
                 <Button

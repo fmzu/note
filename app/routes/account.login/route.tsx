@@ -15,11 +15,11 @@ export default function AccountLoginPage() {
           <p className="text-3xl font-bold">{"ユーザID"}</p>
           <div className="flex flex-col space-y-2">
             <p className="font-bold">{"現在のユーザID"}</p>
-            <Input className="w-80" placeholder={"現在のユーザID"} />
+            <Input className="w-80" defaultValue={"現在のユーザID"} />
           </div>
           <div className="flex flex-col space-y-2">
-            <p className="font-bold">{"新しいユーザID"}</p>
-            <Input className="w-80" placeholder={"ユーザID"} />
+            <p className="font-bold">{"変更後のユーザID"}</p>
+            <Input className="w-80" placeholder={"変更後のユーザID"} />
           </div>
           <Button className="w-80">{"変更を保存"}</Button>
         </div>

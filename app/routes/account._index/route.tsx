@@ -25,9 +25,9 @@ export default function AccountLoginPage() {
               </div>
               <div className="flex flex-col space-y-2">
                 <p className="font-bold">{"変更後の表示名"}</p>
-                <Input defaultValue="変更後の表示名" className="w-80" />
+                <Input placeholder="変更後の表示名" className="w-80" />
               </div>
-              <Button>{"変更"}</Button>
+              <Button>{"変更を保存"}</Button>
             </div>
           </div>
         </div>
