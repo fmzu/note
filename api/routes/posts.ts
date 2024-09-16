@@ -19,6 +19,7 @@ export const postsRoute = new Hono<{ Bindings: { DB: D1Database } }>()
     ),
     async (c) => {
       const auth = c.get("authUser")
+
       if (typeof auth?.session.user?.email !== "string") {
         return c.json({ success: false }, { status: 401 })
       }
